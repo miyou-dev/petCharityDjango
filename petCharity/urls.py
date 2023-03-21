@@ -44,14 +44,8 @@ urlpatterns = [
     path('donate/', include('donate.urls')),
     # 宠物领养
     path('adopt/', include('adopt.urls')),
-    # 宠物评论等
-    # path('petPublicServer/', include('pet_public_server.urls')),
-    # 医院
-    # path('hospital/', include('hospital.urls')),
-    # 资讯
-    # path('news/', include('information.urls')),
 
-    path('', include('other.urls')),
+    path('statistics/', include('other.urls')),
 ]
 
 # 访问静态资源

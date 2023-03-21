@@ -203,6 +203,7 @@ SIMPLEUI_ICON = {
     '用户': 'fa-solid fa-user',
     '用户关注': 'fa-solid fa-shield-heart',
     '用户收藏': 'fa-solid fa-heart',
+    '用户反馈': 'fa-solid fa-message',
 
     '管理员用户': 'fa-sharp fa-solid fa-hammer',
 

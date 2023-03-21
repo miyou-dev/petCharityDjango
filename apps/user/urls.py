@@ -2,7 +2,8 @@ from django.urls import path, include
 
 from user.views.contact_view import ContactView
 from user.views.send_vcode_view import SendVCodeView
-from user.views.userImageView import UserImageView
+from user.views.user_feedback_view import UserFeedbackView, AdminUserFeedbackView
+from user.views.user_image_view import UserImageView
 from user.views.user_collect_view import UserCollectView
 from user.views.user_following_view import UserFollowingView
 from user.views.user_token_view import UserTokenView
@@ -29,7 +30,6 @@ urlpatterns = [
     path('contact', ContactView.as_view()),
 
     # --------------------------------------------------用户登录后--------------------------------------------------
-
     # 收藏
     path('collect', UserCollectView.as_view()),
 
@@ -49,4 +49,8 @@ urlpatterns = [
     # --------------------------------------------------头像上传--------------------------------------------------
     path('avatar/upload', UserImageView.as_view({'post': 'partial_update'})),
 
+    # --------------------------------------------------用户反馈--------------------------------------------------
+    path('feedback', UserFeedbackView.as_view({'post': 'create'})),
+    path('feedback/list', AdminUserFeedbackView.as_view({'get': 'list'})),
+    path('feedback/<int:pk>', AdminUserFeedbackView.as_view({'delete': 'destroy'})),
 ]

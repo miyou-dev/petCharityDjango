@@ -7,7 +7,7 @@ from user.utils.serializers import UserPublicInformationSerializer
 from pet.models import PetBreed, PetImage, Pet
 
 
-# 宠物图片序列化
+# 宠物品种序列化
 class PetBreedSerializer(ModelSerializer):
     class Meta:
         model = PetBreed

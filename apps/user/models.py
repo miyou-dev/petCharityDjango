@@ -42,6 +42,7 @@ class User(models.Model):
         verbose_name = '用户'
         verbose_name_plural = verbose_name
         db_table = 'T_User'
+        ordering = ['-id']
 
     def __str__(self):
         return f'{self.nickname} ({self.phone}'
@@ -56,6 +57,7 @@ class UserFollowing(models.Model):
         verbose_name = '用户关注'
         verbose_name_plural = verbose_name
         db_table = 'T_UserFollowing'
+        ordering = ['-id']
 
     def __str__(self):
         return f'{self.followers} ({self.following} )'
@@ -71,6 +73,24 @@ class UserCollect(models.Model):
         verbose_name = '用户收藏'
         verbose_name_plural = verbose_name
         db_table = 'T_UserCollect'
+        ordering = ['-id']
 
     def __str__(self):
         return f'{self.user} {self.collect_category} {self.collect_id}'
+
+
+class UserFeedback(models.Model):
+    nickname = models.CharField('昵称', max_length=255)
+    title = models.CharField('标题', max_length=255)
+    content = models.TextField('内容')
+    score = models.IntegerField('评级')
+    create_time = models.DateTimeField('创建时间', auto_now_add=True)
+
+    class Meta:
+        verbose_name = '用户反馈'
+        verbose_name_plural = verbose_name
+        db_table = 'T_UserFeedback'
+        ordering = ['-id']
+
+    def __str__(self):
+        return f'{self.nickname} {self.title} {self.create_time}'

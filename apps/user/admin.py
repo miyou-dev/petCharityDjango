@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from user.models import Contact, User, UserFollowing, UserCollect
+from user.models import Contact, User, UserFollowing, UserCollect, UserFeedback
 
 
 @admin.register(Contact)
@@ -22,3 +22,9 @@ class UserFollowingAdmin(admin.ModelAdmin):
 class UserCollectAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'collect_category', 'collect_id', 'collect_time')
     list_filter = ['collect_category']
+
+
+@admin.register(UserFeedback)
+class UserFeedbackAdmin(admin.ModelAdmin):
+    list_display = ('id', 'nickname', 'title', 'score', 'create_time')
+    list_filter = ['score']

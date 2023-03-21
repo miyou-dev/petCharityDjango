@@ -1,5 +1,5 @@
 from rest_framework.viewsets import GenericViewSet
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, CharField
 from rest_framework.status import HTTP_200_OK
 
 from drf_yasg.utils import swagger_auto_schema
@@ -27,6 +27,8 @@ class AdminUserView(GenericViewSet):
         class Meta:
             model = Administrator
             exclude = ['password']
+
+        sex_value = CharField(source='get_sex_display', label='性别')
 
     queryset = Administrator.objects.all()
     serializer_class = AdminLoginSerializers

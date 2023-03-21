@@ -10,6 +10,7 @@ class PetDonate(models.Model):
         verbose_name = '宠物帮助众筹'
         verbose_name_plural = verbose_name
         db_table = 'T_PetDonate'
+        ordering = ['-id']
 
     admin = models.ForeignKey(Administrator, on_delete=models.CASCADE, verbose_name='发起管理员')
     breed = models.ForeignKey(PetBreed, on_delete=models.CASCADE, default=1, verbose_name='品种')
@@ -48,6 +49,7 @@ class PetDonationList(models.Model):
         verbose_name = '宠物帮助众筹捐赠名单'
         verbose_name_plural = verbose_name
         db_table = 'T_PetDonationList'
+        ordering = ['-id']
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='用户')
     donate = models.ForeignKey(PetDonate, on_delete=models.CASCADE, verbose_name='宠物帮助众筹')

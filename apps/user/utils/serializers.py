@@ -4,7 +4,8 @@ from drf_yasg.utils import swagger_serializer_method
 
 from utils.validation import judge_nickname_verify
 
-from user.models import Contact, User, UserFollowing, UserCollect
+from user.models import Contact, User, UserFollowing, UserCollect, UserFeedback
+from adopt.models import PetAdopt
 
 
 # 联系方式序列化
@@ -51,9 +52,13 @@ class UserLoginInformationSerializer(UserPublicInformationSerializer):
         depth = 3
 
     collect_count = SerializerMethodField(label='收藏数')
+    adopt_count = SerializerMethodField(label='发布众筹数')
 
     def get_collect_count(self, user: User) -> int:
         return UserCollect.objects.filter(user=user).count()
+
+    def get_adopt_count(self, user: User) -> int:
+        return PetAdopt.objects.filter(pet__user=user).count()
 
 
 # 用户信息修改序列化
@@ -90,3 +95,9 @@ class UserFollowingSerializer(ModelSerializer):
     @swagger_serializer_method(serializer_or_field=UserPublicInformationSerializer)
     def get_following(self, user_focus: UserFollowing):
         return UserPublicInformationSerializer(user_focus.following, context=self.context).data
+
+
+class UserFeedbackSerializer(ModelSerializer):
+    class Meta:
+        model = UserFeedback
+        fields = '__all__'

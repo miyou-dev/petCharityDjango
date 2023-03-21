@@ -4,6 +4,8 @@ from rest_framework.status import HTTP_200_OK, HTTP_204_NO_CONTENT
 
 from drf_yasg.utils import swagger_auto_schema
 
+from datetime import datetime
+
 from django.db import IntegrityError
 
 # 认证
@@ -43,12 +45,13 @@ class DonateView(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, GenericV
         manual_parameters=[Parameter.admin_token_param()],
         request_body=JsonSchema(
             required=['name', 'breed', 'sex', 'weight', 'birth', 'description',
-                      'amount', 'publish_time', 'images'],
+                      'amount', 'images'],
             properties=properties
         )
     )
     def create(self, request, *args, **kwargs):
         request.data['admin'] = request.user.id
+        request.data['state'] = 0
         return super().create(request, *args, **kwargs)
 
     def perform_create(self, serializer):
@@ -84,6 +87,8 @@ class DonateView(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, GenericV
         # 判断当前是否可以修改
         if donate.state != 0:
             return Response.code_detail(1601, '众筹已经开始 无法修改')
+        request.data['admin'] = request.user.id
+        request.data['state'] = 0
         return super().partial_update(request, *args, **kwargs)
 
     def perform_update(self, serializer):
@@ -125,3 +130,24 @@ class DonateView(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, GenericV
             return Response.code_detail(1601, '众筹已经开始 无法删除')
         self.perform_destroy(donate)
         return Response(status=HTTP_204_NO_CONTENT)
+
+    # --------------------------------------------------修改宠物帮助众筹状态--------------------------------------------------
+    @swagger_auto_schema(
+        operation_summary='修改宠物帮助众筹状态',
+        manual_parameters=[Parameter.admin_token_param()],
+        request_body=JsonSchema(properties={
+            'state': IntSchema('状态'),
+        })
+    )
+    def state_update(self, request, *args, **kwargs):
+        donate: PetDonate = self.get_object()
+        state = request.data['state']
+        if state - 1 == donate.state and state <= 2:
+            donate.state = state
+            if state == 1:
+                donate.publish_time = datetime.now()
+            if state == 2:
+                donate.finish_time = datetime.now()
+            donate.save()
+            return Response.code_detail(200, '完成')
+        return Response.code_detail(400, '错误')

@@ -1,4 +1,4 @@
-from django.urls import path, re_path
+from django.urls import path
 
 from donate.views.donate_view import DonateView
 from donate.views.donate_information_view import DonateInformationView
@@ -13,6 +13,8 @@ urlpatterns = [
     path('create', DonateView.as_view({'post': 'create'})),
     path('update/<int:pk>', DonateView.as_view({'patch': 'partial_update'})),
     path('delete/<int:pk>', DonateView.as_view({'delete': 'destroy'})),
+
+    path('stateUpdate/<int:pk>', DonateView.as_view({'post': 'state_update'})),
 
     # 查询
     path('get/<int:pk>', DonateInformationView.as_view({'get': 'retrieve'})),

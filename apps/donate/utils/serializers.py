@@ -4,7 +4,7 @@ from drf_yasg.utils import swagger_serializer_method
 
 from django.db.models import Sum
 
-from pet.utils.serializers import PetImageSerializer
+from pet.utils.serializers import PetImageSerializer, PetBreedSerializer
 from user.utils.serializers import UserPublicInformationSerializer
 
 from donate.models import PetDonate, PetDonationList
@@ -31,9 +31,14 @@ class DonateSerializer(ModelSerializer):
         model = PetDonate
         exclude = ['publish_time', 'finish_time']
 
+    breed = SerializerMethodField(label='品种')
     sex_value = CharField(source='get_sex_display', label='性别', read_only=True)
     images = SerializerMethodField(label='图片', read_only=True)
     cover_image = SerializerMethodField(label='封面图片')
+
+    @swagger_serializer_method(serializer_or_field=PetBreedSerializer)
+    def get_breed(self, donate: PetDonate):
+        return PetBreedSerializer(donate.breed, context=self.context).data
 
     @swagger_serializer_method(serializer_or_field=PetImageSerializer)
     def get_images(self, donate: PetDonate):

@@ -37,6 +37,7 @@ class Pet(models.Model):
         verbose_name = '宠物'
         verbose_name_plural = verbose_name
         db_table = 'T_Pet'
+        ordering = ['-id']
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='用户')
     breed = models.ForeignKey(PetBreed, on_delete=models.CASCADE, default=1, verbose_name='品种')
