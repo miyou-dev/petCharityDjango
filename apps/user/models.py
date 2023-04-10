@@ -65,7 +65,11 @@ class UserFollowing(models.Model):
 
 class UserCollect(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='用户')
-    collect_category = models.SmallIntegerField('收藏类别', choices=((0, '未知'), (1, '众筹'), (2, '领养')), default=0)
+    collect_category = models.SmallIntegerField(
+        '收藏类别',
+        choices=((0, '未知'), (1, '众筹'), (2, '领养'), (3, '问答')),
+        default=0
+    )
     collect_id = models.IntegerField('收藏ID')
     collect_time = models.DateTimeField('收藏时间', auto_now_add=True)
 

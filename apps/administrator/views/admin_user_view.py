@@ -110,8 +110,10 @@ class AdminUserView(GenericViewSet):
             # 判断手机号是否注册
             if Administrator.objects.filter(phone=phone).count() == 0:
                 return Response.code_detail(1003, '未注册')
-            if judge_msg(phone, code) or Administrator.objects.filter(phone=phone,
-                                                                      password=pass_en(old_password)).count() == 1:
+            if judge_msg(phone, code) or Administrator.objects.filter(
+                    phone=phone,
+                    password=pass_en(old_password)
+            ).count() == 1:
                 # 修改密码
                 self.queryset.filter(phone=phone).update(password=pass_en(new_password))
                 return Response.code_detail(200, '密码修改成功')

@@ -44,6 +44,8 @@ urlpatterns = [
     path('donate/', include('donate.urls')),
     # 宠物领养
     path('adopt/', include('adopt.urls')),
+    # 问答
+    path('ask/', include('question.urls')),
 
     path('statistics/', include('other.urls')),
 ]

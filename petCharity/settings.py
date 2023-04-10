@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'pet.apps.PetConfig',  # 宠物
     'donate.apps.DonateConfig',  # 宠物帮助众筹
     'adopt.apps.AdoptConfig',  # 宠物领养
-    # 'pet_public_server.apps.PetPublicServerConfig',  # 宠物公有接口
+    'question.apps.QuestionConfig',  # 宠物问答
 ]
 
 MIDDLEWARE = [
@@ -219,4 +219,8 @@ SIMPLEUI_ICON = {
     '联系方式': 'fa-solid fa-address-card',
     '宠物领养': 'fa-solid fa-handshake-angle',
     '宠物领养交易订单': 'fa-solid fa-list',
+
+    '宠物问答分类': 'fa-solid fa-list',
+    '宠物问答问题': 'fa-solid fa-question',
+    '宠物问答答案': 'fa-solid fa-message',
 }
